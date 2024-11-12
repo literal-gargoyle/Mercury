@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Window Resizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Website Window Resizer</h1>
+    <form id="resizeForm">
+        <input type="text" id="url" placeholder="Enter website URL" required>
+        <input type="number" id="width" placeholder="Window Width (px)" required>
+        <input type="number" id="height" placeholder="Window Height (px)" required>
+        <button type="submit">Open Window</button>
+        <p class="error" id="errorMessage"></p>
+    </form>
+</div>
+
+<script>
+    document.getElementById('resizeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Clear any previous error messages
+        document.getElementById('errorMessage').textContent = '';
+
+        // Get the values from the form
+        const url = document.getElementById('url').value;
+        const width = parseInt(document.getElementById('width').value, 10);
+        const height = parseInt(document.getElementById('height').value, 10);
+
+        // Validate the URL
+        if (!url || !url.startsWith('http://') && !url.startsWith('https://')) {
+            document.getElementById('errorMessage').textContent = 'Please enter a valid URL (including http:// or https://)';
+            return;
+        }
+
+        // Validate the dimensions
+        if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+            document.getElementById('errorMessage').textContent = 'Please enter valid dimensions for the window.';
+            return;
+        }
+
+        // Open the website in a new window with the specified size
+        window.open(url, '', `width=${width},height=${height}`);
+    });
+</script>
+
+</body>
+</html>
